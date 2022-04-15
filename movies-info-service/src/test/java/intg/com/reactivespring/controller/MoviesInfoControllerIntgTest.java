@@ -65,4 +65,66 @@ class MoviesInfoControllerIntgTest {
                     assert savedMovieInfo.getMovieInfoId() != null;
                 });
     }
+
+    @Test
+    void getAllMovieInfos() {
+        webTestClient.get()
+                .uri(MOVIES_INFO_URL)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBodyList(MovieInfo.class)
+                .hasSize(3);
+    }
+
+    @Test
+    void getMovieInfoById() {
+        var movieInfoId = "abc";
+        webTestClient.get()
+                .uri(MOVIES_INFO_URL + "/{id}", movieInfoId)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody()
+                .jsonPath("$.name").isEqualTo("Dark Knight Rises");
+//                .expectBody(MovieInfo.class)
+//                .consumeWith(movieInfoEntityExchangeResult -> {
+//                    var movieInfo = movieInfoEntityExchangeResult.getResponseBody();
+//                    assertNotNull(movieInfo);
+//                });
+    }
+
+    @Test
+    void updateMovieInfo() {
+        var movieInfoId = "abc";
+        var movieInfo = new MovieInfo("abc", "Dark Knight Rises ControllerTest Update",
+                2022, List.of("Christian Bale", "Tom Hardy"), LocalDate.parse("2012-07-20"));
+
+        webTestClient
+                .put()
+                .uri(MOVIES_INFO_URL + "/{id}", movieInfoId)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBody(MovieInfo.class)
+                .consumeWith(movieInfoEntityExchangeResult -> {
+                    var updatedMovieInfo = movieInfoEntityExchangeResult.getResponseBody();
+                    assert updatedMovieInfo != null;
+                    assert updatedMovieInfo.getMovieInfoId() != null;
+                    assertEquals("Dark Knight Rises ControllerTest Update", updatedMovieInfo.getName());
+                });
+    }
+
+    @Test
+    void deleteMovieInfo() {
+        var movieInfoId = "abc";
+
+        webTestClient
+                .delete()
+                .uri(MOVIES_INFO_URL + "/{id}", movieInfoId)
+                .exchange()
+                .expectStatus()
+                .isNoContent();
+    }
 }
