@@ -37,6 +37,7 @@ class MoviesInfoControllerIntgTest {
                         2008, List.of("Christian Bale", "HeathLedger"), LocalDate.parse("2008-07-18")),
                 new MovieInfo("abc", "Dark Knight Rises",
                         2012, List.of("Christian Bale", "Tom Hardy"), LocalDate.parse("2012-07-20")));
+
         movieInfoRepository.saveAll(movieinfos)
                 .blockLast();
     }
