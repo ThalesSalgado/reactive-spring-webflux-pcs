@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -79,6 +80,22 @@ class MoviesInfoControllerIntgTest {
     }
 
     @Test
+    void getAllMovieInfosByYear() {
+
+        var uri = UriComponentsBuilder.fromUriString(MOVIES_INFO_URL)
+                .queryParam("year", 2005)
+                .buildAndExpand().toUri();
+
+        webTestClient.get()
+                .uri(uri)
+                .exchange()
+                .expectStatus()
+                .is2xxSuccessful()
+                .expectBodyList(MovieInfo.class)
+                .hasSize(1);
+    }
+
+    @Test
     void getMovieInfoById() {
         var movieInfoId = "abc";
         webTestClient.get()
@@ -93,6 +110,16 @@ class MoviesInfoControllerIntgTest {
 //                    var movieInfo = movieInfoEntityExchangeResult.getResponseBody();
 //                    assertNotNull(movieInfo);
 //                });
+    }
+
+    @Test
+    void getMovieInfoById_notFound() {
+        var movieInfoId = "notExistentMovieInfoId";
+        webTestClient.get()
+                .uri(MOVIES_INFO_URL + "/{id}", movieInfoId)
+                .exchange()
+                .expectStatus()
+                .isNotFound();
     }
 
     @Test
@@ -115,6 +142,21 @@ class MoviesInfoControllerIntgTest {
                     assert updatedMovieInfo.getMovieInfoId() != null;
                     assertEquals("Dark Knight Rises ControllerTest Update", updatedMovieInfo.getName());
                 });
+    }
+
+    @Test
+    void updateMovieInfo_notFound() {
+        var movieInfoId = "def";
+        var movieInfo = new MovieInfo("abc", "Dark Knight Rises ControllerTest Update",
+                2022, List.of("Christian Bale", "Tom Hardy"), LocalDate.parse("2012-07-20"));
+
+        webTestClient
+                .put()
+                .uri(MOVIES_INFO_URL + "/{id}", movieInfoId)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus()
+                .isNotFound();
     }
 
     @Test

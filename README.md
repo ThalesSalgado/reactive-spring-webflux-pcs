@@ -21,5 +21,8 @@ brew services restart mongodb-community
 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 
 #### Use Mongo DB with Docker
+- If you prefer, you can try to use **MongoDB** in a docker container.
+```
 docker run -d -p 27017:27017 --name pcs-mongodb mongo:latest
+```
 
