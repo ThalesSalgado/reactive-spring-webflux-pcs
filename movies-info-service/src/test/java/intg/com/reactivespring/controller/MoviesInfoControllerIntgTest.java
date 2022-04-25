@@ -81,7 +81,6 @@ class MoviesInfoControllerIntgTest {
 
     @Test
     void getAllMovieInfosByYear() {
-
         var uri = UriComponentsBuilder.fromUriString(MOVIES_INFO_URL)
                 .queryParam("year", 2005)
                 .buildAndExpand().toUri();
@@ -105,11 +104,6 @@ class MoviesInfoControllerIntgTest {
                 .is2xxSuccessful()
                 .expectBody()
                 .jsonPath("$.name").isEqualTo("Dark Knight Rises");
-//                .expectBody(MovieInfo.class)
-//                .consumeWith(movieInfoEntityExchangeResult -> {
-//                    var movieInfo = movieInfoEntityExchangeResult.getResponseBody();
-//                    assertNotNull(movieInfo);
-//                });
     }
 
     @Test
@@ -170,4 +164,5 @@ class MoviesInfoControllerIntgTest {
                 .expectStatus()
                 .isNoContent();
     }
+
 }
