@@ -75,6 +75,8 @@ public class MoviesControllerIntgTest {
                 .isNotFound()
                 .expectBody(String.class)
                 .isEqualTo("There is no MovieInfo available for the passed id 1");
+
+        verify(1, getRequestedFor(urlEqualTo("/v1/movieinfos/" + movieId)));
     }
 
     @Test
@@ -103,8 +105,8 @@ public class MoviesControllerIntgTest {
     }
 
     @Test
-    void retrieveMovieById_When5XX() {
-        var movieId = "1";
+    void retrieveMovieById_WhenMoviesInfo5XX() {
+        var movieId = "1a";
 
         stubFor(get(urlEqualTo("/v1/movieinfos/" + movieId))
                 .willReturn(aResponse()
@@ -118,6 +120,32 @@ public class MoviesControllerIntgTest {
                 .is5xxServerError()
                 .expectBody(String.class)
                 .isEqualTo("Server Exception in MoviesInfoService MovieInfo Service Unavailable");
+
+        verify(4, getRequestedFor(urlEqualTo("/v1/movieinfos/" + movieId)));
+    }
+
+    @Test
+    void retrieveMovieById_WhenReviews5XX() {
+        var movieId = "1a2b";
+
+        stubFor(get(urlEqualTo("/v1/movieinfos/" + movieId))
+                .willReturn(aResponse()
+                        .withHeader("Content-type", "application/json")
+                        .withBodyFile("movieinfo.json")));
+        stubFor(get(urlPathEqualTo("/v1/reviews"))
+                .willReturn(aResponse()
+                        .withStatus(500)
+                        .withBody("Review Service Not Available")));
+
+        webTestClient.get()
+                .uri("/v1/movies/{id}", movieId)
+                .exchange()
+                .expectStatus()
+                .is5xxServerError()
+                .expectBody(String.class)
+                .isEqualTo("Server Exception in ReviewsService Review Service Not Available");
+
+        verify(4, getRequestedFor(urlPathMatching("/v1/reviews")));
     }
 
 }
