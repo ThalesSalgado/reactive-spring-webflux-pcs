@@ -1,8 +1,6 @@
 package com.reactivespring.client;
 
 import com.reactivespring.domain.Review;
-import com.reactivespring.exception.MoviesInfoClientException;
-import com.reactivespring.exception.MoviesInfoServerException;
 import com.reactivespring.exception.ReviewsClientException;
 import com.reactivespring.exception.ReviewsServerException;
 import com.reactivespring.utils.RetryUtil;
