@@ -26,12 +26,13 @@ public class MoviesController {
 
     @GetMapping("/{id}")
     public Mono<Movie> retrieveMovieById(@PathVariable("id") String movieId) {
-        return moviesInfoRestClient.retrieveMovieInfo(movieId)
-                .flatMap(movieInfo -> {
-                    var reviewsListMono = reviewsRestClient.retrieveReviews(movieId)
-                            .collectList();
-                    return reviewsListMono.map(reviews -> new Movie(movieInfo, reviews));
-                });
+        return null;
+        //        return moviesInfoRestClient.retrieveMovieInfo(movieId)
+//                .flatMap(movieInfo -> {
+//                    var reviewsListMono = reviewsRestClient.retrieveReviews(movieId)
+//                            .collectList();
+//                    return reviewsListMono.map(reviews -> new Movie(movieInfo, reviews));
+//                });
     }
 
     @GetMapping(value = "/stream", produces = MediaType.APPLICATION_NDJSON_VALUE)
