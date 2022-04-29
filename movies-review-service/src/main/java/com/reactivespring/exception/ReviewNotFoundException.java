@@ -1,5 +1,8 @@
 package com.reactivespring.exception;
 
+import lombok.Data;
+
+@Data
 public class ReviewNotFoundException extends RuntimeException{
 
     private String message;
@@ -15,4 +18,5 @@ public class ReviewNotFoundException extends RuntimeException{
         super(message);
         this.message = message;
     }
+
 }

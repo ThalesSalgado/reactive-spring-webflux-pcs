@@ -28,4 +28,5 @@ public class FluxAndMonoController {
         return Flux.interval(Duration.ofSeconds(1))
                 .log();
     }
+
 }

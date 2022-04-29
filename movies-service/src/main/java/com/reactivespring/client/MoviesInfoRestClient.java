@@ -1,6 +1,5 @@
 package com.reactivespring.client;
 
-import com.reactivespring.domain.Movie;
 import com.reactivespring.domain.MovieInfo;
 import com.reactivespring.exception.MoviesInfoClientException;
 import com.reactivespring.exception.MoviesInfoServerException;

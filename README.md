@@ -4,9 +4,9 @@
 
 Curso Spring Webflux Reactive Pragmatic Code School Udemy.
 O projeto consiste de 3 módulos, explorando a biblioteca reativa do Spring Web Flux, sendo eles:
- - *movies-info-service*: módulo responsável pela criação de um filme usando webflux e endpoints nao bloquantes
- - *movies-review-service*: módulo com objetivo de criar um comentário e uma nota para um dado filme implementado com programacao web funcional
- - *movies-service*: módulo que busca informações de um filme nos 2 módulos anteriores de forma reativa e nao bloqueante
+ - *movies-info-service*: módulo responsável pela criação de um filme usando webflux e endpoints nao bloqueantes
+ - *movies-review-service*: módulo com objetivo de criar um comentário e uma nota para um dado filme feito com programacao web funcional
+ - *movies-service*: módulo que busca informações de um filme nos 2 módulos anteriores de forma reativa
 
 Para executar os módulos *movies-info-service* e *movies-review-service* é necessário estar com um banco mongodb rodando.
 

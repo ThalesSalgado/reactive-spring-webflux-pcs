@@ -20,13 +20,16 @@ public class MovieInfo {
 
     @Id
     private String movieInfoId;
+
     @NotBlank(message = "movieInfo.name must be present")
     private String name;
+
     @NotNull
     @Positive(message = "movieInfo.year must be a positive value")
     private Integer year;
 
     private List<@NotBlank(message = "movieInfo.cast must be present") String> cast;
+
     private LocalDate release_date;
 
 }
